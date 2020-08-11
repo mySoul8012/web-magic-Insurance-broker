@@ -11,18 +11,15 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.downloader.HttpClientDownloader;
 import us.codecraft.webmagic.model.HttpRequestBody;
 import us.codecraft.webmagic.processor.PageProcessor;
-import us.codecraft.webmagic.proxy.Proxy;
-import us.codecraft.webmagic.proxy.SimpleProxyProvider;
 import us.codecraft.webmagic.utils.HttpConstant;
 
 import java.util.List;
 
 
 public class vobao implements PageProcessor {
-  private Site site = Site.me().setRetryTimes(50000).setSleepTime(0);
+  private Site site = Site.me().setRetryTimes(50000).setSleepTime(0).addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
 
 
   /**
@@ -52,7 +49,8 @@ public class vobao implements PageProcessor {
 
     // 获取页面url
     List<String> urls = page.getHtml().links().regex("(http://www.(.*).cn)").all();
-    if(urls == null || urls.size() == 0 || requestInfo.getArea2List2().equals("300")){
+    System.out.println(requestInfo.getArea2List2().equals("300"));
+    if(urls == null || urls.size() == 0 ){
       page.setSkip(true);
     }
 
@@ -100,12 +98,8 @@ public class vobao implements PageProcessor {
                       "    \"sex\":\"1\",\n" +
                       "    \"X-Requested-With\":\"XMLHttpRequest\"\n" +
                       "}",
-
               "utf-8"));
-      HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
-      httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy("165.225.80.80",10605)));
       Spider.create(new vobao())
-              .setDownloader(httpClientDownloader)
               .addRequest(request)
               .addPipeline(new vobaoMysql())
               .thread(50000)

@@ -102,7 +102,7 @@ public class axbxw implements PageProcessor {
   public static void main(String[] args){
     Map<String, JqBxInfo> map = new HashMap<String, JqBxInfo>();
     Spider.create(new axbxw())
-            .addUrl("http://www.axbxw.com/agent/19900" +
+            .addUrl("http://www.axbxw.com/agent/20000" +
                     "_cert.html")
             .addPipeline(new AxbxwMySql())
             .thread(5000)

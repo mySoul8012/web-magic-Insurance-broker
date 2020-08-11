@@ -130,7 +130,7 @@ public class Jqbx implements PageProcessor {
   public static void main(String[] args){
     Map<String, JqBxInfo>  map = new HashMap<String, JqBxInfo>();
     Spider.create(new Jqbx(map))
-            .addUrl("http://www.jq-bx.com/dailiren/11500")
+            .addUrl("http://www.jq-bx.com/dailiren/12427")
            .addPipeline(new Mysql())
             .thread(5000)
             .run();
