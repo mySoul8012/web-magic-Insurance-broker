@@ -114,7 +114,7 @@ public class Fanxing implements PageProcessor {
   public static void main(String[] args){
     Map<String, JqBxInfo> map = new HashMap<String, JqBxInfo>();
     Spider.create(new Fanxing())
-            .addUrl("http://www.fangxinbao.com/yingxiaoyuan/92916" +
+            .addUrl("http://www.fangxinbao.com/yingxiaoyuan/94416" +
                     ".html")
            .addPipeline(new FangxingMysql())
             .thread(5000)

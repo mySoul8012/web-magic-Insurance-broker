@@ -22,8 +22,8 @@ import java.util.List;
 
 
 public class vobao implements PageProcessor {
-  private Site site = Site.me().setRetryTimes(50000).setSleepTime(0);
-          //.addHeader(":authority:", "m.vobao.com")
+  private Site site = Site.me().setRetryTimes(50000).setSleepTime(0)
+          .addHeader("Proxy-Authorization:", "Basic MjUwMzk0MjE0NEBxcS5jb206MDEwX1Nz");
           //.addHeader(":method", "POST")
           //.addHeader(":path:", "/Agent/AgentPartial2")
           //.addHeader(":scheme", "https")
@@ -68,7 +68,7 @@ public class vobao implements PageProcessor {
     request.setRequestBody(HttpRequestBody.json(
             resNewJson,
             "utf-8"));
-   // System.out.println(resNewJson);
+    System.out.println(resNewJson);
     // 获取页面url
     List<String> urls = page.getHtml().links().regex("http://m.(.*).cn").all();
   //  System.out.println(requestInfo.getPageindex().equals("300"));
@@ -103,7 +103,7 @@ public class vobao implements PageProcessor {
       request.setRequestBody(HttpRequestBody.json(
               "{\n" +
                       "    \"Search.Pagesize\": \"10000\",\n" +
-                      "    \"Search.Pageindex\": \"1" +
+                      "    \"Search.Pageindex\": \"0" +
                       "\",\n" +
                       "    \"Search.CompSymbol\": \"\",\n" +
                       "    \"Search.CitySymbol\": \"\",\n" +
@@ -111,10 +111,10 @@ public class vobao implements PageProcessor {
                       "}",
               "utf-8"));
       HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
-      httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy("125.92.100.104",23564)));
+      httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy("58.252.200.164",894, "2503942144@qq.com", "010_Ss")));
             Spider.create(new vobao())
               .addRequest(request)
-             // .setDownloader(httpClientDownloader)
+              .setDownloader(httpClientDownloader)
               .addPipeline(new vobaoMysql())
               .thread(50000)
               .run();

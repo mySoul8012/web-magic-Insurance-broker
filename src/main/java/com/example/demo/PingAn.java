@@ -84,7 +84,7 @@ public class PingAn implements PageProcessor {
   public static void main(String[] args){
     Map<String, JqBxInfo> map = new HashMap<String, JqBxInfo>();
     Spider.create(new PingAn())
-            .addUrl("http://www.ping-an.net/pa-5786")
+            .addUrl("http://www.ping-an.net/pa-7683")
             .addPipeline(new PingAnMysql())
             .thread(5000)
             .run();
