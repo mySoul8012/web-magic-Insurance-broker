@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PingAn implements PageProcessor {
-  private Site site = Site.me().setRetryTimes(500000000).setSleepTime(0);
+  private Site site = Site.me().setRetryTimes(500000000).setSleepTime(1000);
 
 
   /**
@@ -30,8 +30,9 @@ public class PingAn implements PageProcessor {
     String name = page.getHtml().xpath("/html/body/div[5]/div/div[2]/div[2]/div/table[2]/tbody/tr/td[1]/table/tbody/tr[4]/td[2]/text()").toString();
     pingAnInfo.setName(name);
     // 获取地区
-    String localhost = page.getHtml().xpath("/html/body/div[5]/div/div[2]/div[2]/div/table[2]/tbody/tr/td[1]/table/tbody/tr[6]/td[2]/text()").toString();
+    String localhost = page.getHtml().xpath("/html/body/div[5]/div/div[2]/div[2]/div/table[2]/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/text()").toString();
     pingAnInfo.setLocalhost(localhost);
+    System.out.println(localhost);
     // 获取所属公司
     String company = page.getHtml().xpath("/html/body/div[5]/div/div[2]/div[2]/div/table[2]/tbody/tr/td[1]/table/tbody/tr[2]/td[2]/text()").toString();
     pingAnInfo.setCompany(company);
@@ -83,8 +84,7 @@ public class PingAn implements PageProcessor {
   public static void main(String[] args){
     Map<String, JqBxInfo> map = new HashMap<String, JqBxInfo>();
     Spider.create(new PingAn())
-
-            .addUrl("http://www.ping-an.net/pa-38908")
+            .addUrl("http://www.ping-an.net/pa-5786")
             .addPipeline(new PingAnMysql())
             .thread(5000)
             .run();

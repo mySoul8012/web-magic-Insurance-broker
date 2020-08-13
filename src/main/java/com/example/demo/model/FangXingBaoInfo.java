@@ -20,6 +20,39 @@ public class FangXingBaoInfo {
   // 头像
   private String url;
 
+  // 获取个人介绍之个人介绍
+  private String personalIntroduction;
+
+  // 个人介绍之个人介绍特长爱好
+  private String personalHobby;
+
+  // 荣誉
+  private String honor;
+
+  public String getHonor() {
+    return honor;
+  }
+
+  public void setHonor(String honor) {
+    this.honor = honor;
+  }
+
+  public String getPersonalHobby() {
+    return personalHobby;
+  }
+
+  public void setPersonalHobby(String personalHobby) {
+    this.personalHobby = personalHobby;
+  }
+
+  public String getPersonalIntroduction() {
+    return personalIntroduction;
+  }
+
+  public void setPersonalIntroduction(String personalIntroduction) {
+    this.personalIntroduction = personalIntroduction;
+  }
+
   public String getUrl() {
     return url;
   }
@@ -95,6 +128,9 @@ public class FangXingBaoInfo {
             ", constellation='" + constellation + '\'' +
             ", areasExpertise=" + Arrays.toString(areasExpertise) +
             ", url='" + url + '\'' +
+            ", personalIntroduction='" + personalIntroduction + '\'' +
+            ", personalHobby='" + personalHobby + '\'' +
+            ", honor='" + honor + '\'' +
             '}';
   }
 }

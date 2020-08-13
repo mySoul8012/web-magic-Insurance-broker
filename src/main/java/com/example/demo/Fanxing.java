@@ -4,11 +4,13 @@ import com.example.demo.db.FangxingMysql;
 import com.example.demo.db.Mysql;
 import com.example.demo.model.FangXingBaoInfo;
 import com.example.demo.model.JqBxInfo;
+import com.google.gson.internal.$Gson$Preconditions;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,10 +46,43 @@ public class Fanxing implements PageProcessor {
     // 擅长领域
     String[] areasExpertise = page.getHtml().css("div.box2").xpath("/div/table[2]/tbody/tr/td[2]/div/a/span/text()").all().toArray(new String[0]);
     fangXingBaoInfo.setAreasExpertise(areasExpertise);
+    //System.out.println(Arrays.toString(areasExpertise));
     // 获取头像
     String ArerUrl = page.getHtml().css("div.xqTop").xpath("/div/div/div/img").xpath("//img/@src").toString();
     fangXingBaoInfo.setUrl(ArerUrl);
 
+
+    // 获取个人介绍，个人介绍
+    String personalIntroduction = page.getHtml().css("div.grjs").xpath("/div/dl/dd/text()").toString();
+    //System.out.println(personalIntroduction);
+    fangXingBaoInfo.setPersonalIntroduction(personalIntroduction);
+    //System.out.println(fangXingBaoInfo);
+
+    // 获取个人介绍，特长爱好信息
+    String hobby = page.getHtml().css("div.grjs").xpath("/div/dl[2]/dd/text()").toString();
+    fangXingBaoInfo.setPersonalHobby(hobby);
+
+    // 获取个人介绍之所获得的荣誉
+    String honor = page.getHtml().css("div.jmtj").replace("<div class=\"jmtj\"> \n" +
+            " ", "").replace("<ul> \n" +
+            "  ", "").replace("<li class=\"top1\">", "").
+            replace("  <li class=\"top2\">", "").
+            replace("  <li class=\"top3\">", "").
+            replace("</li>", "").
+            replace("  \n" +
+                    " </ul> ", "").
+            replace("\n" +
+                    "</div>", "").
+            replace(" \n" +
+                    " </ul> ", "").
+            replace("<li class=\"top3\">", "").
+            replace("\"", "").
+            replace("“", "")
+            .replace("”", "")
+            .replace("\'", "")
+            .toString();
+    fangXingBaoInfo.setHonor(honor);
+    System.out.println(fangXingBaoInfo);
     // 判断是否为空，跳过
     if(fangXingBaoInfo.getName() == null || fangXingBaoInfo.getName() == ""){
       page.setSkip(true);
@@ -79,7 +114,8 @@ public class Fanxing implements PageProcessor {
   public static void main(String[] args){
     Map<String, JqBxInfo> map = new HashMap<String, JqBxInfo>();
     Spider.create(new Fanxing())
-            .addUrl("http://www.fangxinbao.com/yingxiaoyuan/352916.html")
+            .addUrl("http://www.fangxinbao.com/yingxiaoyuan/92916" +
+                    ".html")
            .addPipeline(new FangxingMysql())
             .thread(5000)
             .run();
