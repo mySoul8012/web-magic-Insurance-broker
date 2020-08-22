@@ -8,7 +8,10 @@ import com.google.gson.internal.$Gson$Preconditions;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.downloader.HttpClientDownloader;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.proxy.Proxy;
+import us.codecraft.webmagic.proxy.SimpleProxyProvider;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -113,10 +116,14 @@ public class Fanxing implements PageProcessor {
 
   public static void main(String[] args){
     Map<String, JqBxInfo> map = new HashMap<String, JqBxInfo>();
+    HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
+    httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy("171.95.42.219",36410, "2503942144@qq.com", "010_Ss")));
+
     Spider.create(new Fanxing())
-            .addUrl("http://www.fangxinbao.com/yingxiaoyuan/94416" +
+            .addUrl("http://www.fangxinbao.com/yingxiaoyuan/179286" +
                     ".html")
            .addPipeline(new FangxingMysql())
+           // .setDownloader(httpClientDownloader)
             .thread(5000)
             .run();
   }

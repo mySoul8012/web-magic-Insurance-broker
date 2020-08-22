@@ -9,7 +9,10 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.downloader.HttpClientDownloader;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.proxy.Proxy;
+import us.codecraft.webmagic.proxy.SimpleProxyProvider;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -101,10 +104,16 @@ public class axbxw implements PageProcessor {
 
   public static void main(String[] args){
     Map<String, JqBxInfo> map = new HashMap<String, JqBxInfo>();
+
+    HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
+    httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy("111.79.174.215",766, "2503942144@qq.com", "010_Ss")));
+
+
     Spider.create(new axbxw())
-            .addUrl("http://www.axbxw.com/agent/20670" +
+            .addUrl("http://www.axbxw.com/agent/20755" +
                     "_cert.html")
             .addPipeline(new AxbxwMySql())
+            .setDownloader(httpClientDownloader)
             .thread(5000)
             .run();
   }

@@ -9,13 +9,16 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.downloader.HttpClientDownloader;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.proxy.Proxy;
+import us.codecraft.webmagic.proxy.SimpleProxyProvider;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class PingAn implements PageProcessor {
-  private Site site = Site.me().setRetryTimes(500000000).setSleepTime(1000);
+  private Site site = Site.me().setRetryTimes(500000000).setSleepTime(0);
 
 
   /**
@@ -83,9 +86,12 @@ public class PingAn implements PageProcessor {
 
   public static void main(String[] args){
     Map<String, JqBxInfo> map = new HashMap<String, JqBxInfo>();
+    HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
+    httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy("27.24.5.37",23564, "2503942144@qq.com", "010_Ss")));
     Spider.create(new PingAn())
-            .addUrl("http://www.ping-an.net/pa-7683")
+            .addUrl("http://www.ping-an.net/pa-14892")
             .addPipeline(new PingAnMysql())
+           // .setDownloader(httpClientDownloader)
             .thread(5000)
             .run();
   }

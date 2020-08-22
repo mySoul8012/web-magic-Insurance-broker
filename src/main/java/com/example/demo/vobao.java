@@ -73,7 +73,7 @@ public class vobao implements PageProcessor {
     List<String> urls = page.getHtml().links().regex("http://m.(.*).cn").all();
   //  System.out.println(requestInfo.getPageindex().equals("300"));
     System.out.println(requestInfo.getPageindex());
-    if(urls == null || urls.size() == 0 || requestInfo.getPageindex().equals("30000000")){
+    if(urls == null || urls.size() == 0 || requestInfo.getPageindex().equals("1000")){
       page.setSkip(true);
     }
 
@@ -95,29 +95,17 @@ public class vobao implements PageProcessor {
   }
 
   public static void main(String[] args){
-    int count = 1;
-    for(count = 1; count <= 100; count++) {
-      System.out.println("count: -----------------" +  count);
       Request request = new Request("https://m.vobao.com/Agent/AgentPartial2");
       request.setMethod(HttpConstant.Method.POST);
       request.setRequestBody(HttpRequestBody.json(
-              "{\n" +
-                      "    \"Search.Pagesize\": \"10000\",\n" +
-                      "    \"Search.Pageindex\": \"0" +
-                      "\",\n" +
-                      "    \"Search.CompSymbol\": \"\",\n" +
-                      "    \"Search.CitySymbol\": \"\",\n" +
-                      "    \"Search.ProvinceSymbol\": \"\"\n" +
-                      "}",
-              "utf-8"));
+              "{\"Search.Pagesize\":\"100000\",\"Search.Pageindex\":\"1\",\"Search.CompSymbol\":\"\",\"Search.CitySymbol\":\"\",\"Search.ProvinceSymbol\":\"\"}" ,   "utf-8"));
       HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
-      httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy("58.252.200.164",894, "2503942144@qq.com", "010_Ss")));
+      httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy("27.24.5.37",23564, "2503942144@qq.com", "010_Ss")));
             Spider.create(new vobao())
               .addRequest(request)
-              .setDownloader(httpClientDownloader)
+              //.setDownloader(httpClientDownloader)
               .addPipeline(new vobaoMysql())
               .thread(50000)
               .run();
     }
-  }
 }

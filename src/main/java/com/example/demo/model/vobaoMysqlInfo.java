@@ -1,14 +1,32 @@
 package com.example.demo.model;
 
 public class vobaoMysqlInfo {
+  // 姓名
   private String name;
+  // 电话
   private String phone;
+  // 职位
   private String position;
+  // 所属机构
   private String affiliation;
+  // 执业证号
   private String OCN;
+  // 所在地区
   private String localhost;
+  // 从业年限
   private String proYears;
+  // 头像
   private String photo;
+  // 个人简介
+  private String self;
+
+  public String getSelf() {
+    return self;
+  }
+
+  public void setSelf(String self) {
+    this.self = self;
+  }
 
   public String getName() {
     return name;
@@ -85,6 +103,7 @@ public class vobaoMysqlInfo {
             ", localhost='" + localhost + '\'' +
             ", proYears='" + proYears + '\'' +
             ", photo='" + photo + '\'' +
+            ", self='" + self + '\'' +
             '}';
   }
 }
